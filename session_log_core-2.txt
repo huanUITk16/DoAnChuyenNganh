@@ -1,0 +1,53 @@
+
+SW-CORE-2#
+SW-CORE-2#terminal width 511
+SW-CORE-2#terminal length 0
+SW-CORE-2#
+SW-CORE-2#
+SW-CORE-2#
+SW-CORE-2#configure terminal
+Enter configuration commands, one per line.  End with CNTL/Z.
+SW-CORE-2(config)#
+SW-CORE-2(config)#hostname SW-CORE-2
+SW-CORE-2(config)#vlan 10
+SW-CORE-2(config-vlan)#name NhanVien
+SW-CORE-2(config-vlan)#vlan 20
+SW-CORE-2(config-vlan)#name IT
+SW-CORE-2(config-vlan)#ip routing
+SW-CORE-2(config)#no ip cef
+SW-CORE-2(config)#interface range e0/0-1
+SW-CORE-2(config-if-range)#sw trunk encap dot1q
+SW-CORE-2(config-if-range)#sw mode trunk
+SW-CORE-2(config-if-range)#spanning-tree mode rapid
+SW-CORE-2(config)#spanning-tree vlan 10 root secondary
+SW-CORE-2(config)#spanning-tree vlan 20 root secondary
+SW-CORE-2(config)#int e0/2
+SW-CORE-2(config-if)#no switchport
+SW-CORE-2(config-if)#ip add 172.16.15.6 255.255.255.0
+SW-CORE-2(config-if)#no shut
+SW-CORE-2(config-if)#int e0/3
+SW-CORE-2(config-if)#no switchport
+SW-CORE-2(config-if)#ip add 172.16.12.1 255.255.255.0
+SW-CORE-2(config-if)#no shut
+SW-CORE-2(config-if)#int vlan 10
+SW-CORE-2(config-if)#ip add 192.168.10.6 255.255.255.0
+SW-CORE-2(config-if)#no shut
+SW-CORE-2(config-if)#int vlan 20
+SW-CORE-2(config-if)#ip add 192.168.20.6 255.255.255.0
+SW-CORE-2(config-if)#no shut
+SW-CORE-2(config-if)#int vlan 10
+SW-CORE-2(config-if)#standby 1 ip 192.168.10.1
+SW-CORE-2(config-if)#standby 1 preempt
+SW-CORE-2(config-if)#int vlan 20
+SW-CORE-2(config-if)#standby 1 ip 192.168.20.1
+SW-CORE-2(config-if)#standby 1 preempt
+SW-CORE-2(config-if)#router ospf 1
+SW-CORE-2(config-router)#network 172.16.12.0 0.0.0.255 area 0
+SW-CORE-2(config-router)#network 172.16.15.0 0.0.0.255 area 0
+SW-CORE-2(config-router)#network 192.168.10.0 0.0.0.255 area 0
+SW-CORE-2(config-router)#network 192.168.20.0 0.0.0.255 area 0
+SW-CORE-2(config-router)#
+SW-CORE-2(config-router)#end
+SW-CORE-2#
+SW-CORE-2#
+SW-CORE-2#exit

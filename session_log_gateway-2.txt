@@ -1,0 +1,35 @@
+
+gateway2#
+gateway2#terminal width 511
+gateway2#terminal length 0
+gateway2#
+gateway2#
+gateway2#
+gateway2#configure terminal
+Enter configuration commands, one per line.  End with CNTL/Z.
+gateway2(config)#
+gateway2(config)#hostname GATEWAY-2
+GATEWAY-2(config)#int e0/0
+GATEWAY-2(config-if)#ip add 172.16.15.5 255.255.255.0
+GATEWAY-2(config-if)#no shut
+GATEWAY-2(config-if)#int e0/1
+GATEWAY-2(config-if)#ip add 172.16.14.1 255.255.255.0
+GATEWAY-2(config-if)#no shut
+GATEWAY-2(config-if)#router ospf 1
+GATEWAY-2(config-router)#network 172.16.14.0 0.0.0.255 area 0
+GATEWAY-2(config-router)#network 172.16.15.0 0.0.0.255 area 0
+GATEWAY-2(config-router)#default-information originate
+GATEWAY-2(config-router)#ip route 0.0.0.0 0.0.0.0 192.168.1.2
+GATEWAY-2(config)#access-list 1 permit any
+GATEWAY-2(config)#ip nat inside source list 1 interface e0/2 overload
+GATEWAY-2(config)#int e0/2
+GATEWAY-2(config-if)#ip nat outside
+GATEWAY-2(config-if)#int e0/0
+GATEWAY-2(config-if)#ip nat inside
+GATEWAY-2(config-if)#int e0/1
+GATEWAY-2(config-if)#ip nat inside
+GATEWAY-2(config-if)#
+GATEWAY-2(config-if)#end
+GATEWAY-2#
+GATEWAY-2#
+GATEWAY-2#exit

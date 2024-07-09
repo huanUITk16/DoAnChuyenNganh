@@ -1,0 +1,30 @@
+
+SW-ACCESS-2#
+SW-ACCESS-2#terminal width 511
+SW-ACCESS-2#terminal length 0
+SW-ACCESS-2#
+SW-ACCESS-2#
+SW-ACCESS-2#
+SW-ACCESS-2#configure terminal
+Enter configuration commands, one per line.  End with CNTL/Z.
+SW-ACCESS-2(config)#
+SW-ACCESS-2(config)#hostname SW-ACCESS-2
+SW-ACCESS-2(config)#vtp domain ********123
+Domain name already set to ********123.
+SW-ACCESS-2(config)#vlan 20
+SW-ACCESS-2(config-vlan)#name IT
+SW-ACCESS-2(config-vlan)#interface e0/0
+SW-ACCESS-2(config-if)#switchport mode access
+SW-ACCESS-2(config-if)#switchport access vlan 20
+SW-ACCESS-2(config-if)#int range e0/1-2
+SW-ACCESS-2(config-if-range)#switchport trunk encap dot1q
+SW-ACCESS-2(config-if-range)#switchport mode trunk
+SW-ACCESS-2(config-if-range)#spanning-tree mode rapid
+SW-ACCESS-2(config)#int e0/0
+SW-ACCESS-2(config-if)#spanning-tree portfast
+SW-ACCESS-2(config-if)#spanning-tree bpduguard enable
+SW-ACCESS-2(config-if)#
+SW-ACCESS-2(config-if)#end
+SW-ACCESS-2#
+SW-ACCESS-2#
+SW-ACCESS-2#exit

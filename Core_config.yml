@@ -1,0 +1,21 @@
+- name: Core config
+  hosts: Cores
+  gather_facts: false
+  connection: network_cli
+
+  vars:
+    ansible_connection: network_cli
+    ansible_network_os: ios
+    ansible_user: admin
+    ansible_password: cisco
+    ansible_become: yes
+    ansible_become_method: enable
+    ansible_python_interpreter: /usr/bin/python
+    ansible_ssh_timeout: 60
+  tasks:
+    - name: Core config
+      ansible.builtin.script:
+        cmd: /etc/ansible/playbook/script/Core_configuration.py
+        executable: /usr/bin/python
+      register: result
+

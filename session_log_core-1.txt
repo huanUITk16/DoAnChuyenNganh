@@ -1,0 +1,67 @@
+
+SW-CORE-1#
+SW-CORE-1#terminal width 511
+SW-CORE-1#terminal length 0
+SW-CORE-1#
+SW-CORE-1#
+SW-CORE-1#
+SW-CORE-1#configure terminal
+Enter configuration commands, one per line.  End with CNTL/Z.
+SW-CORE-1(config)#
+SW-CORE-1(config)#hostname SW-CORE-1
+SW-CORE-1(config)#vlan 10
+SW-CORE-1(config-vlan)#name NhanVien
+SW-CORE-1(config-vlan)#vlan 20
+SW-CORE-1(config-vlan)#name IT
+SW-CORE-1(config-vlan)#ip routing
+SW-CORE-1(config)#no ip cef
+SW-CORE-1(config)#interface range e0/0-1
+SW-CORE-1(config-if-range)#sw trunk encap dot1q
+SW-CORE-1(config-if-range)#sw mode trunk
+SW-CORE-1(config-if-range)#spanning-tree mode rapid
+SW-CORE-1(config)#spanning-tree vlan 10 root primary
+SW-CORE-1(config)#spanning-tree vlan 20 root primary
+SW-CORE-1(config)#int e0/2
+SW-CORE-1(config-if)#no switchport
+SW-CORE-1(config-if)#ip add 172.16.10.2 255.255.255.0
+SW-CORE-1(config-if)#no shut
+SW-CORE-1(config-if)#int e0/3
+SW-CORE-1(config-if)#no switchport
+SW-CORE-1(config-if)#ip add 172.16.14.2 255.255.255.0
+SW-CORE-1(config-if)#no shut
+SW-CORE-1(config-if)#int vlan 10
+SW-CORE-1(config-if)#ip add 192.168.10.5 255.255.255.0
+SW-CORE-1(config-if)#no shut
+SW-CORE-1(config-if)#int vlan 20
+SW-CORE-1(config-if)#ip add 192.168.20.5 255.255.255.0
+SW-CORE-1(config-if)#no shut
+SW-CORE-1(config-if)#ip dhcp pool vlan10
+SW-CORE-1(dhcp-config)#network 192.168.10.0 255.255.255.0
+SW-CORE-1(dhcp-config)#default-router 192.168.10.1
+SW-CORE-1(dhcp-config)#dns 8.8.8.8
+SW-CORE-1(dhcp-config)#exit
+SW-CORE-1(config)#ip dhcp exclude 192.168.10.1 192.168.10.5
+SW-CORE-1(config)#ip dhcp pool vlan20
+SW-CORE-1(dhcp-config)#network 192.168.20.0 255.255.255.0
+SW-CORE-1(dhcp-config)#default-router 192.168.20.1
+SW-CORE-1(dhcp-config)#dns 8.8.8.8
+SW-CORE-1(dhcp-config)#exit
+SW-CORE-1(config)#ip dhcp exclude 192.168.20.1 192.168.20.5
+SW-CORE-1(config)#int vlan 10
+SW-CORE-1(config-if)#standby 1 ip 192.168.10.1
+SW-CORE-1(config-if)#standby 1 priority 105
+SW-CORE-1(config-if)#standby 1 preempt
+SW-CORE-1(config-if)#int vlan 20
+SW-CORE-1(config-if)#standby 1 ip 192.168.20.1
+SW-CORE-1(config-if)#standby 1 priority 105
+SW-CORE-1(config-if)#standby 1 preempt
+SW-CORE-1(config-if)#router ospf 1
+SW-CORE-1(config-router)#network 172.16.14.0 0.0.0.255 area 0
+SW-CORE-1(config-router)#network 172.16.10.0 0.0.0.255 area 0
+SW-CORE-1(config-router)#network 192.168.10.0 0.0.0.255 area 0
+SW-CORE-1(config-router)#network 192.168.20.0 0.0.0.255 area 0
+SW-CORE-1(config-router)#
+SW-CORE-1(config-router)#end
+SW-CORE-1#
+SW-CORE-1#
+SW-CORE-1#exit
